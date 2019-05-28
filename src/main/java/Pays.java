@@ -1,9 +1,10 @@
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Pays {
-    private LinkedList<String> langues; //Balise languages -> element -> name
-    private int superficie; //Balise area
+    private List<String> langues; //Balise languages -> element -> name
+    private double superficie; //Balise area
     private int population; //Balise population
     private String nom; //Balise translations -> fr
     private String drapeau; //Balise flag
@@ -12,7 +13,7 @@ public class Pays {
     private String sousContinent; //Balise subregion
 
     public Pays(){
-        langues = new LinkedList<String>();
+        langues = new ArrayList<String>();
     }
 
     public List<String> getLangues(){
@@ -23,11 +24,11 @@ public class Pays {
         langues.add(s);
     }
 
-    public int getSuperficie(){
+    public double getSuperficie(){
         return superficie;
     }
 
-    public void setSuperficie(int i){
+    public void setSuperficie(double i){
         superficie = i;
     }
 
@@ -79,4 +80,16 @@ public class Pays {
         sousContinent = s;
     }
 
+    public String toString() {
+        String tmp =  "nom : " + nom + "\n" +
+                "capital : " + capitale + "\n" +
+                "continent : " + continent + "\n" +
+                "sous continent : " + sousContinent + "\n" +
+                "drapeau : " + drapeau + "\n" +
+                "population : " + population + "\n" +
+                "superficie : " + superficie + "\n";
+
+        tmp += "langues : " + langues.toString() + "\n";
+        return tmp;
+    }
 }

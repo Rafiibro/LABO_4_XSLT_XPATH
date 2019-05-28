@@ -7,34 +7,34 @@ import java.io.File;
 public class InterfaceRecherchePays extends JFrame {
 
     private JPanel panelRecherche = new JPanel(new FlowLayout());
-
+/*
     private JComboBox<String> continents = new JComboBox<>();
     private JComboBox<String> langages = new JComboBox<>();
     private JButton createXSL = new JButton("Générer XSL");
     private JTextField superficieMin = new JTextField(5);
     private JTextField superficieMax = new JTextField(5);
-
-    public InterfaceRecherchePays(File xmlFile) {
+*/
+    /*public InterfaceRecherchePays(File xmlFile) {
 
         createXSL.addMouseListener(new MouseAdapter() {
 
             @Override
             public void mouseClicked(MouseEvent e) {
 
-                super.mouseClicked(e);
+                super.mouseClicked(e);*/
 
                 // Création des fichiers XSL selon ce qui est demandé
 
                 /** A compléter... **/
 
-            }
+          //  }
 
-        });
+      //  });
 
         /**
          * A compléter : Remplissage des listes de recherche (avec les continents et les langues parlées dans l'ordre alphabétique)
          */
-
+/*
         setLayout(new BorderLayout());
 
         panelRecherche.add(new JLabel("Choix d'un continent"));
@@ -60,11 +60,11 @@ public class InterfaceRecherchePays extends JFrame {
 
 
     }
-
-    public static void main(String ... args) {
+*/
+   /* public static void main(String ... args) {
 
         new InterfaceRecherchePays(new File("countries.xml"));
 
     }
-
+*/
 }
