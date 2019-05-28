@@ -8,12 +8,12 @@ import org.jdom2.input.*;
 
 public class XMLParser {
 
+    private List<Pays> listPays = new ArrayList<>();
+
     XMLParser(String path) {
 
         SAXBuilder saxBuilder = new SAXBuilder();
         File xmlFile = new File(path);
-        List<Pays> listPays = new ArrayList<Pays>();
-
         try {
             Document document = saxBuilder.build(xmlFile);
             Element rootElement = document.getRootElement();
@@ -50,6 +50,10 @@ public class XMLParser {
             System.out.println(jdomex.getMessage());
         }
 
+    }
+
+    public List<Pays> getListPays() {
+        return listPays;
     }
 
     public static void main(String[] args) {
