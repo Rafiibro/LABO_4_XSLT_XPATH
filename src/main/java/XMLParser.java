@@ -10,7 +10,6 @@ public class XMLParser {
     XMLParser(File xmlFile) {
 
         SAXBuilder saxBuilder = new SAXBuilder();
-
         try {
             Document document = saxBuilder.build(xmlFile);
             Element rootElement = document.getRootElement();
@@ -38,4 +37,5 @@ public class XMLParser {
         }
 
     }
+
 }
