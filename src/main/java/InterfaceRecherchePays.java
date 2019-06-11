@@ -5,14 +5,9 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 public class InterfaceRecherchePays extends JFrame {
-
-    private LinkedList<Pays> pays;
 
     private JPanel panelRecherche = new JPanel(new FlowLayout());
 
@@ -22,9 +17,27 @@ public class InterfaceRecherchePays extends JFrame {
     private JTextField superficieMin = new JTextField(5);
     private JTextField superficieMax = new JTextField(5);
 
+    private static LinkedList<String> cont = new LinkedList<String>();
+    private static LinkedList<String> lang = new LinkedList<String>();
+
     public InterfaceRecherchePays(File xmlFile) {
 
-        pays = new LinkedList<Pays>();
+
+        new XMLParser(xmlFile);
+
+        continents.addItem("...");
+        langages.addItem("...");
+
+        Collections.sort(cont);
+        Collections.sort(lang);
+
+        for(String continent : cont){
+            continents.addItem(continent);
+        }
+
+        for(String langage : lang){
+            langages.addItem(langage);
+        }
 
         createXSL.addMouseListener(new MouseAdapter() {
 
@@ -36,6 +49,32 @@ public class InterfaceRecherchePays extends JFrame {
                 // Création des fichiers XSL selon ce qui est demandé
 
                 /** A compléter... **/
+                String query = "//element[";
+                if(!continents.getSelectedItem().equals("...")){
+                    query += "region=\"" + continents.getSelectedItem().toString() + "\" and ";
+                }
+                if(!langages.getSelectedItem().equals("...")){
+                    query += "languages/element/name=\"" + langages.getSelectedItem().toString() + "\" and ";
+                }
+                if(!superficieMin.getText().equals("")){
+                    query += "area >= " + superficieMin.getText() + " and ";
+                }
+                if(!superficieMax.getText().equals("")){
+                    query += "area <= " + superficieMax.getText() + " and ";
+                }
+
+                if(query.length() == 10){
+                    query = query.substring(0, 9);
+                }else{
+                    query = query.substring(0, query.length() -5);
+                    query += "]";
+                }
+
+                System.out.println(query);
+
+                new XSLCreator(query);
+
+
 
             }
 
@@ -45,27 +84,6 @@ public class InterfaceRecherchePays extends JFrame {
          * A compléter : Remplissage des listes de recherche (avec les continents et les langues parlées dans l'ordre alphabétique)
          */
 
-        setLayout(new BorderLayout());
-        LinkedList<String> conts = new LinkedList<String>();
-        LinkedList<String> langues = new LinkedList<String>();
-        for(Pays p : pays){
-            if(!isInList(p.getContinent(), conts)){
-                conts.add(p.getContinent());
-            }
-            for(String lang : p.getLangues()){
-                if(!isInList(lang, langues)){
-                    conts.add(lang);
-                }
-            }
-        }
-
-        for(String cont : conts){
-            continents.addItem(cont);
-        }
-
-        for(String langue : langues){
-            langages.addItem(langue);
-        }
 
         panelRecherche.add(new JLabel("Choix d'un continent"));
         panelRecherche.add(continents);
@@ -91,10 +109,22 @@ public class InterfaceRecherchePays extends JFrame {
 
     }
 
-    private boolean isInList(String s, LinkedList<String> l){
+    private static boolean isInList(String s, LinkedList<String> l){
         for(String isIn : l)
             if(isIn.equals(s)) return true;
         return false;
+    }
+
+    public static void addContinent(String continent){
+        if(!isInList(continent, cont)){
+            cont.add(continent);
+        }
+    }
+
+    public static void addLangue(String langue){
+        if(!isInList(langue, lang)){
+            lang.add(langue);
+        }
     }
 
     public static void main(String ... args) {
