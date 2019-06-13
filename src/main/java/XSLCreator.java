@@ -24,11 +24,17 @@ public class XSLCreator {
             final Document document = builder.newDocument();
 
             // Etape 4 : création de l'Element racine
-            final Element root = document.createElement("xsl:template match\"\"");
+            final Element root = document.createElement("xsl:stylesheet");
+            root.setAttribute( "version", "1.0");
+            root.setAttribute("xmlns:xsl","http://www.w3.org/1999/XSL/Transform");
             document.appendChild(root);
 
+            final Element template = document.createElement("xsl:template");
+            template.setAttribute( "match", "/");
+            root.appendChild(template);
+
             final Element html = document.createElement("html");
-            root.appendChild(html);
+            template.appendChild(html);
 
             final Element head = document.createElement("head");
             html.appendChild(head);
@@ -46,20 +52,34 @@ public class XSLCreator {
             body.appendChild(tableau);
 
             //Element 6 : création des lignes
-            final Element xslForEach = document.createElement("xsl:for-each select=\"" + query  + "\"");
+            final Element xslForEach = document.createElement("xsl:for-each");
+            xslForEach.setAttribute( "select", query);
             tableau.appendChild(xslForEach);
 
-            final Element p1 = document.createElement("p");
-            xslForEach.appendChild(p1);
+            /* Création du bouton */
+            final Element bouton = document.createElement("button");
+            bouton.setAttribute("onclick", "window.location.href = 'https://w3docs.com';");
+            xslForEach.appendChild(bouton);
 
-            final Element flagPays = document.createElement("xsl:value-of select=\"flag\"");
-            p1.appendChild(flagPays);
+            /* Création deu nom du pays en récupérant le nom en français et ajout sur le bouton */
+            final Element nomPays = document.createElement("xsl:value-of");
+            nomPays.setAttribute( "select", "translations/fr");
+            bouton.appendChild(nomPays);
 
-            final Element p2 = document.createElement("p");
-            xslForEach.appendChild(p2);
+            /* Création de l'image en récupérant le flag et ajout sur le bouton */
+            final Element image = document.createElement("img");
+            image.setAttribute("height", "20");
+            image.setAttribute("width", "20");
+            bouton.appendChild(image);
+            final Element flag = document.createElement("xsl:attribute");
+            flag.setAttribute( "name", "src");
+            image.appendChild(flag);
+            final Element flagPays = document.createElement("xsl:value-of");
+            flagPays.setAttribute( "select", "flag");
+            flag.appendChild(flagPays);
 
-            final Element nomPays = document.createElement("xsl:value-of select=\"name\"");
-            p2.appendChild(nomPays);
+            final Element p = document.createElement("p");
+            xslForEach.appendChild(p);
 
             // Etape 7 : finalisation
             final TransformerFactory transformerFactory = TransformerFactory.newInstance();

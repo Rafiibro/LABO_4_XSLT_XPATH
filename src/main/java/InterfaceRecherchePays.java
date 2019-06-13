@@ -48,8 +48,7 @@ public class InterfaceRecherchePays extends JFrame {
 
                 // Création des fichiers XSL selon ce qui est demandé
 
-                /** A compléter... **/
-                String query = "//element[";
+                String query = "/countries/element[";
                 if(!continents.getSelectedItem().equals("...")){
                     query += "region=\"" + continents.getSelectedItem().toString() + "\" and ";
                 }
@@ -63,19 +62,14 @@ public class InterfaceRecherchePays extends JFrame {
                     query += "area <= " + superficieMax.getText() + " and ";
                 }
 
-                if(query.length() == 10){
-                    query = query.substring(0, 9);
+                if(query.length() == 19){
+                    query = query.substring(0, 18);
                 }else{
                     query = query.substring(0, query.length() -5);
                     query += "]";
                 }
 
-                System.out.println(query);
-
                 new XSLCreator(query);
-
-
-
             }
 
         });
