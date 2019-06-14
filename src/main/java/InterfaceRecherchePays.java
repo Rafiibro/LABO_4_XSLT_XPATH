@@ -1,10 +1,12 @@
+import org.xml.sax.SAXException;
+
 import javax.swing.*;
+import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
+import java.io.IOException;
 import java.util.*;
 
 public class InterfaceRecherchePays extends JFrame {
@@ -123,7 +125,7 @@ public class InterfaceRecherchePays extends JFrame {
 
     public static void main(String ... args) {
 
-        new InterfaceRecherchePays(new File("countries.xml"));
+        new InterfaceRecherchePays(new File("exportfile/countries.xml"));
 
     }
 
