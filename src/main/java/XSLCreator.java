@@ -24,7 +24,6 @@ public class XSLCreator {
             final Element doc = document.getDocumentElement();
 
             final Node template = doc.getChildNodes().item(3);
-            NamedNodeMap n = template.getAttributes();
             final Node html = template.getChildNodes().item(1);
             final Node body = html.getChildNodes().item(3);
             final Node forEach = body.getChildNodes().item(1);
