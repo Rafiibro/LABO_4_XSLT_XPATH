@@ -1,28 +1,23 @@
-import org.xml.sax.SAXException;
-
 import javax.swing.*;
-import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.io.IOException;
-import java.util.*;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Objects;
 
 public class InterfaceRecherchePays extends JFrame {
 
-    private JPanel panelRecherche = new JPanel(new FlowLayout());
-
-    private JComboBox<String> continents = new JComboBox();
-    private JComboBox<String> langages = new JComboBox();
-    private JButton createXSL = new JButton("Générer XSL");
+    private JComboBox<String> continents = new JComboBox<>();
+    private JComboBox<String> langages = new JComboBox<>();
     private JTextField superficieMin = new JTextField(5);
     private JTextField superficieMax = new JTextField(5);
 
-    private static LinkedList<String> cont = new LinkedList<String>();
-    private static LinkedList<String> lang = new LinkedList<String>();
+    private static LinkedList<String> cont = new LinkedList<>();
+    private static LinkedList<String> lang = new LinkedList<>();
 
-    public InterfaceRecherchePays(File xmlFile) {
+    InterfaceRecherchePays(File xmlFile) {
 
 
         new XMLParser(xmlFile);
@@ -41,6 +36,7 @@ public class InterfaceRecherchePays extends JFrame {
             langages.addItem(langage);
         }
 
+        JButton createXSL = new JButton("Générer XSL");
         createXSL.addMouseListener(new MouseAdapter() {
 
             @Override
@@ -51,11 +47,11 @@ public class InterfaceRecherchePays extends JFrame {
                 // Création des fichiers XSL selon ce qui est demandé
 
                 String query = "/countries/element[";
-                if(!continents.getSelectedItem().equals("...")){
-                    query += "region=\"" + continents.getSelectedItem().toString() + "\" and ";
+                if(!Objects.equals(continents.getSelectedItem(), "...")){
+                    query += "region=\"" + Objects.requireNonNull(continents.getSelectedItem()).toString() + "\" and ";
                 }
-                if(!langages.getSelectedItem().equals("...")){
-                    query += "languages/element/name=\"" + langages.getSelectedItem().toString() + "\" and ";
+                if(!Objects.equals(langages.getSelectedItem(), "...")){
+                    query += "languages/element/name=\"" + Objects.requireNonNull(langages.getSelectedItem()).toString() + "\" and ";
                 }
                 if(!superficieMin.getText().equals("")){
                     query += "area >= " + superficieMin.getText() + " and ";
@@ -76,11 +72,12 @@ public class InterfaceRecherchePays extends JFrame {
 
         });
 
-        /**
-         * A compléter : Remplissage des listes de recherche (avec les continents et les langues parlées dans l'ordre alphabétique)
+        /*
+          A compléter : Remplissage des listes de recherche (avec les continents et les langues parlées dans l'ordre alphabétique)
          */
 
 
+        JPanel panelRecherche = new JPanel(new FlowLayout());
         panelRecherche.add(new JLabel("Choix d'un continent"));
         panelRecherche.add(continents);
 
@@ -107,18 +104,18 @@ public class InterfaceRecherchePays extends JFrame {
 
     private static boolean isInList(String s, LinkedList<String> l){
         for(String isIn : l)
-            if(isIn.equals(s)) return true;
-        return false;
+            if(isIn.equals(s)) return false;
+        return true;
     }
 
-    public static void addContinent(String continent){
-        if(!isInList(continent, cont)){
+    static void addContinent(String continent){
+        if(isInList(continent, cont)){
             cont.add(continent);
         }
     }
 
-    public static void addLangue(String langue){
-        if(!isInList(langue, lang)){
+    static void addLangue(String langue){
+        if(isInList(langue, lang)){
             lang.add(langue);
         }
     }

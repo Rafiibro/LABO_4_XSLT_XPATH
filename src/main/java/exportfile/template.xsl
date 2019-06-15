@@ -1,4 +1,4 @@
-<?xml version = "1.0" encoding = "UTF-8" ?>
+﻿<?xml version = "1.0" encoding = "UTF-8" ?>
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     <xsl:output
@@ -20,9 +20,7 @@
                         select="/countries/element">
                     <!-- Button trigger modal -->
                     <button style="height:30px;width:250px" type="button" class="btn btn-primary" data-toggle="modal">
-                        <xsl:attribute name="data-target">
-                            #<xsl:value-of select="./translations/fr"/>
-                        </xsl:attribute>
+                        <xsl:attribute name="data-target"><xsl:value-of select="concat('#', ./translations/fr)"/></xsl:attribute>
                         <p>
                             <xsl:value-of select="./translations/fr"/>
                             <img height="20" width="25" style="float: right;">
@@ -44,9 +42,7 @@
                                     <h5 class="modal-title" id="exampleModalLabel">
                                         <xsl:value-of select="./translations/fr"/>
                                     </h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        x
-                                    </button>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">x</button>
                                 </div>
                                 <p>
                                     <img height="150" width="210" style="float: left;">
@@ -56,22 +52,17 @@
                                     </img>
                                     Capital :
                                     <xsl:value-of select="./capital"/>
-                                    <br/>
-                                    Population :
+                                    <br/>Population :
                                     <xsl:value-of select="./population"/> habitants
-                                    <br/>
-                                    Superficie :
+                                    <br/> Superficie :
                                     <xsl:value-of select="./area"/> km2
-                                    <br/>
-                                    Continent :
+                                    <br/>Continent :
                                     <xsl:value-of select="./region"/>
-                                    <br/>
-                                    Sous-Continent :
+                                    <br/> Sous-Continent :
                                     <xsl:value-of select="./subregion"/>
                                     <br/>
                                     <br/>
-                                    <br/>
-                                    Langues parlées
+                                    <br/>Langues parlées
                                     <br/>
                                     <ul>
                                         <xsl:for-each select="./languages/element/name">
@@ -81,7 +72,7 @@
                                             </li>
                                         </xsl:for-each>
                                     </ul>
-                                </p>
+								</p>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                                 </div>

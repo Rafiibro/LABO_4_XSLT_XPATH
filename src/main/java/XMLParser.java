@@ -5,7 +5,7 @@ import java.util.List;
 import org.jdom2.*;
 import org.jdom2.input.*;
 
-public class XMLParser {
+class XMLParser {
 
     XMLParser(File xmlFile) {
 
@@ -16,24 +16,20 @@ public class XMLParser {
 
             List listCountries = rootElement.getChildren("element");
 
-            for (int iCountry = 0; iCountry < listCountries.size(); ++iCountry) {
+            for (Object listCountry : listCountries) {
 
-                Element country = (Element) listCountries.get(iCountry);
+                Element country = (Element) listCountry;
                 InterfaceRecherchePays.addContinent(country.getChild("region").getValue());
                 List langues = country.getChild("languages").getChildren("element");
-                for (int iLangue = 0; iLangue < langues.size(); ++iLangue) {
-                    Element langue = (Element) langues.get(iLangue);
+                for (Object o : langues) {
+                    Element langue = (Element) o;
                     InterfaceRecherchePays.addLangue(langue.getChild("name").getValue());
                 }
             }
         }
 
-        catch (IOException io) {
+        catch (IOException | JDOMException io) {
             System.out.println(io.getMessage());
-        }
-
-        catch (JDOMException jdomex) {
-            System.out.println(jdomex.getMessage());
         }
 
     }

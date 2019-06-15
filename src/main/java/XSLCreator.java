@@ -7,12 +7,16 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 import java.io.File;
 import java.io.IOException;
 
-public class XSLCreator {
+class XSLCreator {
 
-    public XSLCreator(String query) {
+    XSLCreator(String query) {
 
         final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
@@ -21,12 +25,20 @@ public class XSLCreator {
 
             final Document document = builder.parse(new File("src/main/java/exportfile/template.xsl"));
 
+            XPath xp = XPathFactory.newInstance().newXPath();
+            NodeList nl = (NodeList) xp.evaluate("//text()[normalize-space(.)='']", document, XPathConstants.NODESET);
+
+            for (int i=0; i < nl.getLength(); ++i) {
+                Node node = nl.item(i);
+                node.getParentNode().removeChild(node);
+            }
+
             final Element doc = document.getDocumentElement();
 
-            final Node template = doc.getChildNodes().item(3);
-            final Node html = template.getChildNodes().item(1);
-            final Node body = html.getChildNodes().item(3);
-            final Node forEach = body.getChildNodes().item(1);
+            final Node template = doc.getChildNodes().item(1);
+            final Node html = template.getChildNodes().item(0);
+            final Node body = html.getChildNodes().item(1);
+            final Node forEach = body.getChildNodes().item(0);
             Node nn = forEach.getAttributes().item(0);
             nn.setNodeValue(query);
 
@@ -48,15 +60,7 @@ public class XSLCreator {
             //sortie
             transformer.transform(source, sortie);
 
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (TransformerConfigurationException e) {
-            e.printStackTrace();
-        } catch (TransformerException e) {
+        } catch (ParserConfigurationException | IOException | SAXException | TransformerException | XPathExpressionException e) {
             e.printStackTrace();
         }
     }
