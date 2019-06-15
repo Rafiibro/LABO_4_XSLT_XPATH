@@ -1,11 +1,20 @@
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
 import javax.swing.*;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Objects;
+import java.util.TreeSet;
 
 public class InterfaceRecherchePays extends JFrame {
 
@@ -14,26 +23,46 @@ public class InterfaceRecherchePays extends JFrame {
     private JTextField superficieMin = new JTextField(5);
     private JTextField superficieMax = new JTextField(5);
 
-    private static LinkedList<String> cont = new LinkedList<>();
-    private static LinkedList<String> lang = new LinkedList<>();
-
     InterfaceRecherchePays(File xmlFile) {
-
-
-        new XMLParser(xmlFile);
 
         continents.addItem("...");
         langages.addItem("...");
 
-        Collections.sort(cont);
-        Collections.sort(lang);
+        XPathFactory factory = XPathFactory.newInstance();
+        XPath xPath = factory.newXPath();
 
-        for(String continent : cont){
-            continents.addItem(continent);
-        }
+        try {
+            Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(xmlFile);
 
-        for(String langage : lang){
-            langages.addItem(langage);
+            XPathExpression expr = xPath.compile("/countries/element/region/text()");
+            NodeList nodesContinents = (NodeList)expr.evaluate(doc, XPathConstants.NODESET);
+            TreeSet<String> valeurs = new TreeSet<>();
+            for (int i = 0; i < nodesContinents.getLength(); ++i) {
+                valeurs.add(nodesContinents.item(i).getNodeValue());
+            }
+            for(String s : valeurs){
+                continents.addItem(s);
+            }
+
+            valeurs.clear();
+
+            expr = xPath.compile("/countries/element/languages/element/name/text()");
+            NodeList nodeLangages = (NodeList)expr.evaluate(doc, XPathConstants.NODESET);
+            for (int i = 0; i < nodesContinents.getLength(); ++i) {
+                valeurs.add(nodeLangages.item(i).getNodeValue());
+            }
+            for(String s : valeurs){
+                langages.addItem(s);
+            }
+
+        } catch (XPathExpressionException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         JButton createXSL = new JButton("Générer XSL");
@@ -106,18 +135,6 @@ public class InterfaceRecherchePays extends JFrame {
         for(String isIn : l)
             if(isIn.equals(s)) return false;
         return true;
-    }
-
-    static void addContinent(String continent){
-        if(isInList(continent, cont)){
-            cont.add(continent);
-        }
-    }
-
-    static void addLangue(String langue){
-        if(isInList(langue, lang)){
-            lang.add(langue);
-        }
     }
 
     public static void main(String ... args) {

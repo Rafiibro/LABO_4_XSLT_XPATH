@@ -11,7 +11,7 @@
         <link href="../css/bootstrap.min.css" rel="stylesheet"/>
       </head>
       <body>
-        <xsl:for-each select="/countries/element[area &gt;= 80000]">
+        <xsl:for-each select="/countries/element[region=&quot;Americas&quot;]">
           <!-- Button trigger modal -->
           <button class="btn btn-primary" data-toggle="modal" style="height:30px;width:250px" type="button">
             <xsl:attribute name="data-target">
