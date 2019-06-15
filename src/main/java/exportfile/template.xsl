@@ -20,7 +20,7 @@
                         select="/countries/element">
                     <!-- Button trigger modal -->
                     <button style="height:30px;width:250px" type="button" class="btn btn-primary" data-toggle="modal">
-                        <xsl:attribute name="data-target"><xsl:value-of select="concat('#', ./translations/fr)"/></xsl:attribute>
+                        <xsl:attribute name="data-target"><xsl:value-of select="concat('#', ./alpha3Code)"/></xsl:attribute>
                         <p>
                             <xsl:value-of select="./translations/fr"/>
                             <img height="20" width="25" style="float: right;">
@@ -34,7 +34,7 @@
                     <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                          aria-hidden="true">
                         <xsl:attribute name="id">
-                            <xsl:value-of select="./translations/fr"/>
+                            <xsl:value-of select="./alpha3Code"/>
                         </xsl:attribute>
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">

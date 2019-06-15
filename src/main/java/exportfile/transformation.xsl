@@ -11,11 +11,11 @@
         <link href="../css/bootstrap.min.css" rel="stylesheet"/>
       </head>
       <body>
-        <xsl:for-each select="/countries/element[region=&quot;Americas&quot;]">
+        <xsl:for-each select="/countries/element">
           <!-- Button trigger modal -->
           <button class="btn btn-primary" data-toggle="modal" style="height:30px;width:250px" type="button">
             <xsl:attribute name="data-target">
-              <xsl:value-of select="concat('#', ./translations/fr)"/>
+              <xsl:value-of select="concat('#', ./alpha3Code)"/>
             </xsl:attribute>
             <p>
               <xsl:value-of select="./translations/fr"/>
@@ -29,7 +29,7 @@
           <!-- Modal -->
           <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" role="dialog" tabindex="-1">
             <xsl:attribute name="id">
-              <xsl:value-of select="./translations/fr"/>
+              <xsl:value-of select="./alpha3Code"/>
             </xsl:attribute>
             <div class="modal-dialog" role="document">
               <div class="modal-content">

@@ -11,8 +11,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.LinkedList;
 import java.util.Objects;
 import java.util.TreeSet;
 
@@ -55,13 +53,7 @@ public class InterfaceRecherchePays extends JFrame {
                 langages.addItem(s);
             }
 
-        } catch (XPathExpressionException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (XPathExpressionException | SAXException | ParserConfigurationException | IOException e) {
             e.printStackTrace();
         }
 
@@ -129,12 +121,6 @@ public class InterfaceRecherchePays extends JFrame {
         setTitle("Interface de recherche de pays");
 
 
-    }
-
-    private static boolean isInList(String s, LinkedList<String> l){
-        for(String isIn : l)
-            if(isIn.equals(s)) return false;
-        return true;
     }
 
     public static void main(String ... args) {
